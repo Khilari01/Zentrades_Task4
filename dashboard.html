@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+    <title>Dashboard</title>
+    <style>
+      body {
+        font-family: Roboto, sans-serif;
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        background-color: #e6e6e7;
+        font-size: 16px;
+      }
+     
+        .title1 {
+          padding: 20px 35px;
+          font-weight: bold;
+        }
+        .grid-container {
+          display: grid;
+          grid-template-columns: auto auto auto auto;
+          margin: 0px 20px;
+        }
+        .grid-item {
+          background-color: white;
+          border-left: 10px solid #40be99;
+          margin: 0px 15px 15px;
+          box-shadow: 2px 2px 3px rgb(179, 179, 179);
+          height: 90px;
+          padding: 10px 20px 0px 20px;
+          width: 293px;
+        }
+        .title {
+          font-size: 20px;
+          margin-bottom: 30px;
+        }
+        .title2 {
+          font-weight: bold;
+          margin: 40px 0 0 0;
+        }
+
+        .graph-container {
+          flex: 1;
+          display: flex;
+          justify-content: space-between;
+        }
+        .graph {
+          flex: 1;
+          box-sizing: border-box;
+        }
+        #graph1 {
+          margin: 0 15px 0 35px;
+        }
+        #graph2 {
+          margin: 0 35px 0 15px;
+        }
+        canvas {
+          margin: 20px 0 0 0;
+          height: 300px !important ;
+          width: 615px !important ;
+          padding: 10px 50px;
+        }
+        .can {
+          background-color: white;
+          box-shadow: 2px 2px 3px rgb(179, 179, 179);
+          text-align: center;
+          padding: 0px 0 10px;
+          margin: 20px 0 50px;
+          font-size: 14px;
+        }
+
+      @media only screen and (max-width: 1024px){
+      .grid-container {
+        display: grid;
+        /*  */
+        grid-template-columns: auto auto;
+        margin: 0px 20px;
+      }
+
+      .graph-container {
+        display: grid;
+        grid-template-columns: auto;
+        /*  */
+        justify-content: space-between;
+      }
+      
+      #graph2 {
+        margin: 0 35px 80px 15px;
+        /*  */
+      }
+      
+      .can {
+        background-color: white;
+        box-shadow: 2px 2px 3px rgb(179, 179, 179);
+        text-align: center;
+        padding: 0px 0 10px;
+        margin: 20px 0;
+        /*  */
+        font-size: 14px;
+      }
+    }
+    </style>
+  </head>
+  <body>
+    <div class="title1">Company Metrics</div>
+    <div class="grid-container">
+      <div class="grid-item">
+        <div class="title" style="color: #40be99">$406,411.29</div>
+        <div class="value">Total Revenue</div>
+      </div>
+      <div class="grid-item">
+        <div class="title">$620</div>
+        <div class="value">Total Jobs Avg</div>
+      </div>
+      <div class="grid-item">
+        <div class="title">655</div>
+        <div class="value">Tickets Created</div>
+      </div>
+      <div class="grid-item">
+        <div class="title">735</div>
+        <div class="value">Tickets Scheduled</div>
+      </div>
+      <div class="grid-item">
+        <div class="title" style="color: red">$110,448.8</div>
+        <div class="value">Outstanding Amount</div>
+      </div>
+      <div class="grid-item">
+        <div class="title">105</div>
+        <div class="value">Memberships Sold</div>
+      </div>
+      <div class="grid-item">
+        <div class="title">436</div>
+        <div class="value">Jobs Completed</div>
+      </div>
+      <div class="grid-item">
+        <div class="title">65</div>
+        <div class="value">Total Canceled</div>
+      </div>
+    </div>
+
+    <div class="graph-container">
+      <div class="graph" id="graph1">
+        <div class="title2">Revenue By Job Location</div>
+        <div class="can"><canvas></canvas> Revenue for November 2019</div>
+      </div>
+      <div class="graph" id="graph2">
+        <div class="title2">Revenue By Job Type</div>
+        <div class="can"><canvas></canvas> Revenue for November 2019</div>
+      </div>
+    </div>
+
+    <script>
+      var data1 = {
+        labels: [
+          "Everett",
+          "Seattle",
+          "Lynnwood",
+          "Bothell",
+          "Mukilteo",
+          "Edmonds",
+        ],
+        datasets: [
+          {
+            backgroundColor: "#40be99",
+            data: [80000, 75000, 49000, 47000, 46000, 34000],
+          },
+        ],
+      };
+
+      // Data for the second graph
+      var data2 = {
+        labels: [
+          "Service Plumbing",
+          "Bid Work HVAC",
+          "Service HVAC",
+          "Bid Work Plumbing",
+          "HWT Replacement",
+          "Maintenance",
+          "Material Sale",
+        ],
+        datasets: [
+          {
+            backgroundColor: "#40be99",
+            data: [190000, 130000, 79000, 78000, 44000, 42000, 2000],
+          },
+        ],
+      };
+
+      // Options for both graphs
+      var option1 = {
+        indexAxis: "y",
+        legend: { display: false },
+        scales: {
+          xAxes: [{ ticks: { stepSize: 5000, beginAtZero: true } }],
+          yAxes: [{ ticks: { beginAtZero: true } }],
+        },
+      };
+
+      var option2 = {
+        indexAxis: "y",
+        legend: { display: false },
+        scales: {
+          xAxes: [{ ticks: { stepSize: 20000, beginAtZero: true } }],
+          yAxes: [{ ticks: { beginAtZero: true } }],
+        },
+      };
+
+      // Create the first graph
+      var ctx1 = document
+        .getElementById("graph1")
+        .querySelector("canvas")
+        .getContext("2d");
+      new Chart(ctx1, {
+        type: "horizontalBar",
+        data: data1,
+        options: option1,
+      });
+
+      // Create the second graph
+      var ctx2 = document
+        .getElementById("graph2")
+        .querySelector("canvas")
+        .getContext("2d");
+      new Chart(ctx2, {
+        type: "horizontalBar",
+        data: data2,
+        options: option2,
+      });
+    </script>
+  </body>
+</html>
